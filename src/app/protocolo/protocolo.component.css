@@ -1,0 +1,29 @@
+.div_protocolo_background{
+	  display:flex;
+	  flex-direction:column;
+	  width:100%;
+	  min-height:100vh;
+	  justify-content:center;
+	  align-items:center;
+	  background-color: var(--backgroundColor);
+}
+
+.div_protocolo{
+	width:30%;
+	background-color: white;
+	padding:3rem 3rem;
+}
+
+.protocolo_number{
+	  font-family: var(--fontFamily);
+	  font-size: 1.5rem;
+	  color: black;
+	margin:0;
+  }
+
+.protocolo_date{
+	  font-family: var(--fontFamily);
+	  font-size: 1rem;
+	  color: black;
+	margin:0;
+  }

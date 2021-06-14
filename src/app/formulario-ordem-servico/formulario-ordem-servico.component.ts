@@ -36,10 +36,10 @@ export class FormularioOrdemServicoComponent implements OnInit {
 	// CONSTRUCTOR AND NGONINIT //
 	
 	constructor(
-		private route : ActivatedRoute,
-		private router: Router,
 		public exameService: ExameServiceService,
-		public ordemServicoService: OrdemServicoService
+		public ordemServicoService: OrdemServicoService,
+		private route : ActivatedRoute,
+		private router: Router
 	) {}
 	
 	ngOnInit() {
@@ -130,6 +130,40 @@ export class FormularioOrdemServicoComponent implements OnInit {
 	
 	////////////////////////
 	// API RETURN HANDLES //
+	
+	private handleOrdemCreation(protocolo: Protocolo){
+	
+		this.router.navigate(
+			['protocolo'], 
+			{
+				queryParams: {
+					n: protocolo.id,
+					d: formatDate(protocolo.dataEntrega, DateFormatView, 'en')
+				}
+			}
+		);
+	}
+	
+	private clearErrors(){
+		this.unknownErrorMessage = '';
+		this.invalidCPFErrorMessage = '';
+		this.invalidCRMErrorMessage = ''
+		this.invalidConvenioErrorMessage = '';
+		this.invalidExameErrorMessage = '';
+	}
+	
+	private handleErrors(error: ServerError){
+		if(error instanceof UnknownError)
+			this.unknownErrorMessage = error.message;
+		else if(error instanceof InvalidCPFError)
+			this.invalidCPFErrorMessage = error.message;
+		else if(error instanceof InvalidCRMError)
+			this.invalidCRMErrorMessage = error.message;
+		else if(error instanceof InvalidConvenioError)
+			this.invalidConvenioErrorMessage = error.message;
+		else if(error instanceof InvalidExameError)
+			this.invalidExameErrorMessage = error.message;
+	}
 	
 	
 	
