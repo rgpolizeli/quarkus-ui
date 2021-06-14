@@ -4,6 +4,7 @@ import { ExameServiceService, Exame } from '../exame-service.service';
 import {formatDate} from '@angular/common';
 import {DateFormat, DateFormatView, PostoColetaId} from '../global-variables';
 import {OrdemServico, Protocolo, ServerError, UnknownError, InvalidPostoColetaError, InvalidExameError, InvalidCRMError, InvalidCPFError, InvalidConvenioError} from '../models';
+import { OrdemServicoService } from '../ordem-servico.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
@@ -38,6 +39,7 @@ export class FormularioOrdemServicoComponent implements OnInit {
 		private route : ActivatedRoute,
 		private router: Router,
 		public exameService: ExameServiceService,
+		public ordemServicoService: OrdemServicoService
 	) {}
 	
 	ngOnInit() {
@@ -102,6 +104,25 @@ export class FormularioOrdemServicoComponent implements OnInit {
 	}
   
 	onSubmitFormularioOrdemServico(){
+		let ordem:OrdemServico = new OrdemServico(
+			this.getCurrentDate(),
+			this.cpf.value,
+			this.convenio.value,
+			PostoColetaId,
+			this.crm.value,
+			this.selectedExamesIds
+		);
+		
+		this.ordemServicoService.createOrdemServico(ordem).subscribe(
+			(resp: Protocolo) => {
+				this.clearErrors();
+				this.handleOrdemCreation(resp);
+			},
+			(err: ServerError) => {
+				this.clearErrors();
+				this.handleErrors(err);
+			}
+		);
 	}
 	
 	
