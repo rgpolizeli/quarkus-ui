@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray  } from '@angular/forms';
+import { ExameServiceService, Exame } from '../exame-service.service';
 import {formatDate} from '@angular/common';
 import {DateFormat, DateFormatView, PostoColetaId} from '../global-variables';
 import {OrdemServico, Protocolo, ServerError, UnknownError, InvalidPostoColetaError, InvalidExameError, InvalidCRMError, InvalidCPFError, InvalidConvenioError} from '../models';
@@ -35,10 +36,12 @@ export class FormularioOrdemServicoComponent implements OnInit {
 	
 	constructor(
 		private route : ActivatedRoute,
-		private router: Router
+		private router: Router,
+		public exameService: ExameServiceService,
 	) {}
 	
 	ngOnInit() {
+		this.loadExamesCheckBoxes();
 		this.formularioOrdemServico = this.createFormGroup();
 	}
 	
@@ -46,6 +49,12 @@ export class FormularioOrdemServicoComponent implements OnInit {
 	
 	/////////////////////////////////
 	// FORM METHODS AND INITIATION //
+	
+	private loadExamesCheckBoxes(){
+		this.exameService.getExames().subscribe((resp: Array<Exame>) => {
+			this.examesDataSource = resp.slice();
+		});
+	}
 	
 	private createFormGroup() : FormGroup{
 		return new FormGroup({
@@ -72,6 +81,24 @@ export class FormularioOrdemServicoComponent implements OnInit {
 	// EVENTS ON FORM //
 	
 	onCheckboxChange(e:any) {
+
+		if (e.target.checked) {
+		  this.examesDataSource.forEach((exame: Exame) => {
+			  
+			if (exame.descricao === e.target.value) {
+			  this.selectedExamesIds.push(exame.id);
+			  return;
+			}
+		  });
+		} else {
+		  
+		  this.examesDataSource.forEach((exame: Exame) => {
+			if (exame.descricao === e.target.value) {
+			  this.selectedExamesIds.splice(this.selectedExamesIds.indexOf(exame.id), 1);
+			  return;
+			}
+		  });
+		}
 	}
   
 	onSubmitFormularioOrdemServico(){
