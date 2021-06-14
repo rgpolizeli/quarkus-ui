@@ -1,0 +1,56 @@
+
+.form_ordem_servico{
+	width:30%;
+	
+}
+
+.form_ordem_servico_input {
+    width: 100%;
+    padding: 0.5rem 0.9rem;
+    margin: 0.5rem 0 0 0;
+    box-sizing: border-box;
+	font-size: 1rem;
+	font-family: var(--fontFamily);
+	border: 1px solid gray;
+  }
+  
+.form_ordem_servico_label{
+	font-size: 1rem;
+	font-family: var(--fontFamily);
+	color: var(--normalFontColor);
+}
+
+.error_message{
+	font-size: 1rem;
+	font-family: var(--fontFamily);
+	color: var(--errorColor);
+}
+
+  
+  button {
+	  background-color: lightgray;
+      font-size: 1rem;
+      margin: 0.5rem auto;
+      padding: 0.5rem 0.9rem;
+	 float: right;
+  }
+  
+  .div-form{
+	  display:flex;
+	  flex-direction:column;
+	  width:100%;
+	  min-height:100vh;
+	  justify-content:center;
+	  align-items:center;
+	  background-color: var(--backgroundColor);
+  }
+  
+  .div_form_field{
+	  margin: 2rem 0.5rem;
+  }
+  
+  .check_box_group_title{
+	  font-family: var(--fontFamily);
+	  font-size: 1rem;
+	  
+  }

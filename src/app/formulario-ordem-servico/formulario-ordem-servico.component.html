@@ -1,0 +1,38 @@
+<div class="div-form">
+
+<p class="error_message">{{unknownErrorMessage}}</p>
+
+<form [formGroup]="formularioOrdemServico" class="form_ordem_servico">
+  <div class="div_form_field">
+	  <label for="cpf" class="form_ordem_servico_label">CPF: </label>
+	  <input id="cpf" class="form_ordem_servico_input" type="text" formControlName="cpf">
+	  <p class="error_message">{{invalidCPFErrorMessage}}</p>
+  </div>
+  
+  <div class="div_form_field">
+	<label for="convenio" class="form_ordem_servico_label">Convênio: </label>
+	<input id="convenio" class="form_ordem_servico_input" type="text" formControlName="convenio">
+	<p class="error_message">{{invalidConvenioErrorMessage}}</p>
+  </div>
+  
+  <div class="div_form_field">
+	  <label for="crm" class="form_ordem_servico_label">CRM: </label>
+	  <input id="crm" class="form_ordem_servico_input" type="text" formControlName="crm">
+	  <p class="error_message">{{invalidCRMErrorMessage}}</p>
+  </div>
+  
+  <div class="div_group_checkbox">
+  <p class="check_box_group_title">Exames solicitados</p>
+  <div class="div_form_field" *ngFor="let exame of examesDataSource; let i=index;">
+    <label class="form_ordem_servico_label">
+      <input type="checkbox" [value]="exame.descricao" (change)="onCheckboxChange($event)"/>
+      {{exame.descricao + " - R$ " + exame.preco}}
+    </label>
+  </div>
+  <p class="error_message">{{invalidExameErrorMessage}}</p>
+  </div>
+
+	<button type="submit" (click)="onSubmitFormularioOrdemServico()">Cadastrar</button>
+
+</form>
+</div>
